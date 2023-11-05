@@ -37,6 +37,9 @@ export class GildedRose {
   resolveNewItemQuality(item: Item) {
     switch (item.name) {
       case ITEM_AGED_BRIE:
+        if (item.sellIn <= 0) {
+          return Math.min(item.quality + 2, MAX_QUALITY);
+        }
         return Math.min(item.quality + 1, MAX_QUALITY);
       case ITEM_BACKSTAGE_PASS:
         if (item.sellIn <= 0) {
@@ -51,8 +54,14 @@ export class GildedRose {
       case ITEM_SULFURAS:
         return 80;
       case ITEM_CONJURED:
+        if (item.sellIn <= 0) {
+          return Math.max(item.quality - 4, MIN_QUALITY);
+        }
         return Math.max(item.quality - 2, MIN_QUALITY);
       default:
+        if (item.sellIn <= 0) {
+          return Math.max(item.quality - 2, MIN_QUALITY);
+        }
         return Math.max(item.quality - 1, MIN_QUALITY);
     }
   }
@@ -62,28 +71,6 @@ export class GildedRose {
     item.quality = this.resolveNewItemQuality(item);
     if (item.name != ITEM_SULFURAS) {
       item.sellIn = item.sellIn - 1;
-    }
-    if (item.sellIn < 0) {
-      if (item.name != ITEM_AGED_BRIE) {
-        if (item.name != ITEM_BACKSTAGE_PASS) {
-          if (item.quality > 0) {
-            if (item.name != ITEM_SULFURAS) {
-              item.quality = item.quality - 1
-            }
-            if (item.name == ITEM_CONJURED) {
-              if (item.quality > 0) {
-                item.quality = item.quality - 1
-              }
-            }
-          }
-        } else {
-          item.quality = item.quality - item.quality
-        }
-      } else {
-        if (item.quality < 50) {
-          item.quality = item.quality + 1
-        }
-      }
     }
   }
 }
