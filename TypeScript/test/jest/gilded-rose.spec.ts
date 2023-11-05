@@ -180,4 +180,52 @@ describe('Gilded Rose', () => {
       expect(items[2].sellIn).toBe(-2);
     });
   });
+
+  describe('Conjured', () => {
+    const itemName = 'Conjured Mana Cake';
+    test('quality should degrade x2', () => {
+      const gildedRose = new GildedRose([
+        new Item(itemName, 2, 10),
+        new Item(itemName, 1, 10),
+      ]);
+      const items = gildedRose.updateQuality();
+      for (const item of items) {
+        expect(item.quality).toBe(8);
+      }
+    });
+
+    test('quality should degrade x4 if expired', () => {
+      const gildedRose = new GildedRose([
+        new Item(itemName, 0, 10),
+        new Item(itemName, -1, 10),
+      ]);
+      const items = gildedRose.updateQuality();
+      for (const item of items) {
+        expect(item.quality).toBe(6);
+      }
+    });
+
+    test('quality is never negative', () => {
+      const gildedRose = new GildedRose([
+        new Item(itemName, 2, 0),
+        new Item(itemName, -1, 1),
+      ]);
+      const items = gildedRose.updateQuality();
+      for (const item of items) {
+        expect(item.quality).toBe(0);
+      }
+    });
+
+    test('SellIn always decreases', () => {
+      const gildedRose = new GildedRose([
+        new Item(itemName, 2, 0),
+        new Item(itemName, 0, 0),
+        new Item(itemName, -1, 1),
+      ]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].sellIn).toBe(1);
+      expect(items[1].sellIn).toBe(-1);
+      expect(items[2].sellIn).toBe(-2);
+    });
+  });
 });
