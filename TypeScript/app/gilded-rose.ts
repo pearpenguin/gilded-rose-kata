@@ -1,3 +1,8 @@
+const ITEM_SULFURAS = 'Sulfuras, Hand of Ragnaros';
+const ITEM_AGED_BRIE = 'Aged Brie';
+const ITEM_BACKSTAGE_PASS = 'Backstage passes to a TAFKAL80ETC concert';
+const ITEM_CONJURED = 'Conjured Mana Cake';
+
 export class Item {
   name: string;
   sellIn: number;
@@ -9,8 +14,6 @@ export class Item {
     this.quality = quality;
   }
 }
-
-const ITEM_CONJURED = 'Conjured Mana Cake';
 
 export class GildedRose {
   items: Array<Item>;
@@ -28,9 +31,9 @@ export class GildedRose {
   }
 
   updateItemQuality(item: Item) {
-    if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+    if (item.name != ITEM_AGED_BRIE && item.name != ITEM_BACKSTAGE_PASS) {
       if (item.quality > 0) {
-        if (item.name != 'Sulfuras, Hand of Ragnaros') {
+        if (item.name != ITEM_SULFURAS) {
           item.quality = item.quality - 1
         }
         if (item.name == ITEM_CONJURED) {
@@ -42,7 +45,7 @@ export class GildedRose {
     } else {
       if (item.quality < 50) {
         item.quality = item.quality + 1
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+        if (item.name == ITEM_BACKSTAGE_PASS) {
           if (item.sellIn < 11) {
             if (item.quality < 50) {
               item.quality = item.quality + 1
@@ -56,14 +59,14 @@ export class GildedRose {
         }
       }
     }
-    if (item.name != 'Sulfuras, Hand of Ragnaros') {
+    if (item.name != ITEM_SULFURAS) {
       item.sellIn = item.sellIn - 1;
     }
     if (item.sellIn < 0) {
-      if (item.name != 'Aged Brie') {
-        if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+      if (item.name != ITEM_AGED_BRIE) {
+        if (item.name != ITEM_BACKSTAGE_PASS) {
           if (item.quality > 0) {
-            if (item.name != 'Sulfuras, Hand of Ragnaros') {
+            if (item.name != ITEM_SULFURAS) {
               item.quality = item.quality - 1
             }
             if (item.name == ITEM_CONJURED) {
