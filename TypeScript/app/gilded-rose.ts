@@ -10,6 +10,8 @@ export class Item {
   }
 }
 
+const ITEM_CONJURED = 'Conjured Mana Cake';
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -23,6 +25,11 @@ export class GildedRose {
         if (this.items[i].quality > 0) {
           if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
             this.items[i].quality = this.items[i].quality - 1
+          }
+          if (this.items[i].name == ITEM_CONJURED) {
+            if (this.items[i].quality > 0) {
+              this.items[i].quality = this.items[i].quality - 1;
+            }
           }
         }
       } else {
@@ -51,6 +58,11 @@ export class GildedRose {
             if (this.items[i].quality > 0) {
               if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
                 this.items[i].quality = this.items[i].quality - 1
+              }
+              if (this.items[i].name == ITEM_CONJURED) {
+                if (this.items[i].quality > 0) {
+                  this.items[i].quality = this.items[i].quality - 1
+                }
               }
             }
           } else {
